@@ -1,0 +1,37 @@
+<project basedir="." name="WebCamTest" default="build" >
+  <description>
+    	Web Cam Test
+    </description>
+<!-- Global properties for this script -->  <property location="src" name="src" />
+  <property location="bin" name="classes" />
+  <property location="." name="archive" />
+  <property location="/home/mcshlain/opt/JMF-2.1.1e" name="jmf" />
+ 
+ <target name="init" >
+<!-- Create the classes directory structure -->   
+ <mkdir dir="${classes}" />
+  </target>
+
+  <target depends="init" name="compile" description="compiles all source files" >
+<!-- Compile the java code from ${src} into ${build} -->    
+  	<javac destdir="${classes}" srcdir="${src}" source="1.6" debug="true" />
+  </target>
+
+  <target depends="compile" name="archive" description="generate the archive" >
+<!-- Put everything in ${classes} into a basic archive into $(archive)/vshark.jar -->    
+  	<jar jarfile="${archive}/videoTool.jar" basedir="${classes}" >
+      <manifest>
+        <attribute value="${user.name}" name="Built-By" />
+        <attribute value="il.ac.haifa.videopacity.Main" name="Main-Class" />
+        <attribute value="${jmf}/lib/jmf.jar" name="Class-Path" />
+      </manifest>
+    </jar>
+  </target>
+
+  <target depends="archive" name="clean" description="deletes classes" >
+    <delete dir="${classes}" />
+  </target>
+
+<target depends="clean" name="build" description="Full Build" />
+  
+</project>
